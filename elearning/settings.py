@@ -15,7 +15,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 from elearning.settings_local import DEBUG, BASE_DIR, DATABASES, SECRET_KEY, PROJECT_NAME
 
-
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',

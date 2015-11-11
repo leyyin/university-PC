@@ -6,8 +6,6 @@ Group project for university.
 - Git https://confluence.atlassian.com/bitbucket/set-up-git-744723531.html
 
 # Install
-Change into the directory of the code.
-
 ## Linux (UNIX systems)
 1. Clone the repository and change into it:
 `git clone https://github.com/leyyin/university-PC.git && cd university-PC`
