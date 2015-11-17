@@ -1,6 +1,8 @@
 #!/usr/bin/python
-from django.shortcuts import render_to_response
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index(request):
-    return render_to_response('index.html')
+    return render(request, 'index.html')
