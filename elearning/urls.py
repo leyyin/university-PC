@@ -25,9 +25,9 @@ urlpatterns = [
 
     # See https://docs.djangoproject.com/en/1.8/topics/auth/default/#module-django.contrib.auth.views
     # url(r'^', include('django.contrib.auth.urls')),
-    url(r'^login/', auth_views.login, {'template_name': 'admin/login.html'}, name='login'),
-    url(r'^logout/', auth_views.logout, name='logout'),
+    url(r'^login/', auth_views.login, {'template_name': 'registration/login.html'}, name='login'),
+    url(r'^logout/', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
 
     # /admin
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls))
 ]

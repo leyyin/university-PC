@@ -1,36 +1,92 @@
 {% extends "base.html" %}
 
-{% block body %}
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    {% if next %}
-        {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed,
-               please login with an account that has access.</p>
-        {% else %}
-            <p>Please login to see this page.</p>
-        {% endif %}
-    {% endif %}
-
-    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
-
-        <input type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-
-    {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
 {% endblock %}
+{% block body_attributes %}class="login"{% endblock %}
+
+{% block body %}
+
+    <!-- Container -->
+    <div id="container">
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1 id="site-name"><a href="{% url 'index' %}">ELearning login</a></h1>
+            </div>
+        </div>
+        <!-- END Header -->
+
+        <!-- Content -->
+        <div id="content" class="colM">
+            {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <div id="content-main">
+                <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form">
+                    {% csrf_token %}
+                    <div class="form-row">
+
+                        <label for="id_username">Username:</label> <input id="id_username" maxlength="254"
+                                                                          name="username" type="text" />
+                    </div>
+                    <div class="form-row">
+
+                        <label for="id_password">Password:</label> <input id="id_password" name="password"
+                                                                          type="password" />
+                        <input type="hidden" name="next" value="" />
+                    </div>
+                    <div class="submit-row">
+                        <label>&nbsp;</label><input type="submit" value="Log in" />
+                    </div>
+                </form>
+
+                <script type="text/javascript">
+                    document.getElementById('id_username').focus()
+                </script>
+            </div>
+
+            <br class="clear" />
+        </div>
+        <!-- END Content -->
+
+        <div id="footer"></div>
+    </div>
+    <!-- END Container -->
+{% endblock %}
+
+{#{% block body %}#}
+{#    {% if form.errors %}#}
+{#        <p>Your username and password didn't match. Please try again.</p>#}
+{#    {% endif %}#}
+{##}
+{#    {% if next %}#}
+{#        {% if user.is_authenticated %}#}
+{#            <p>Your account doesn't have access to this page. To proceed,#}
+{#               please login with an account that has access.</p>#}
+{#        {% else %}#}
+{#            <p>Please login to see this page.</p>#}
+{#        {% endif %}#}
+{#    {% endif %}#}
+{##}
+{#    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">#}
+{#        {% csrf_token %}#}
+{#        <table>#}
+{#            <tr>#}
+{#                <td>{{ form.username.label_tag }}</td>#}
+{#                <td>{{ form.username }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>{{ form.password.label_tag }}</td>#}
+{#                <td>{{ form.password }}</td>#}
+{#            </tr>#}
+{#        </table>#}
+{##}
+{#        <input type="submit" value="login" />#}
+{#        <input type="hidden" name="next" value="{{ next }}" />#}
+{#    </form>#}
+{##}
+{# Assumes you setup the password_reset view in your URLconf #}
+{#    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+{#{% endblock %}#}
