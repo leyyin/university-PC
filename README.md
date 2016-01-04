@@ -1,6 +1,9 @@
 # university-PC
 Group project for university.
 
+# Build Status
+[![Build Status](https://travis-ci.org/leyyin/university-PC.svg?branch=master)](https://travis-ci.org/leyyin/university-PC)
+
 # Requirements
 - Python >= 3.4 https://www.python.org/downloads/
 - Git https://confluence.atlassian.com/bitbucket/set-up-git-744723531.html
