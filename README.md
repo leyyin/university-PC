@@ -56,10 +56,13 @@ Run `python manage.py reset_db`
 ### Go into a django shell
 Run `python manage.py shell_plus` 
 
+## Create a super user
+Run `python manage.py createsuperuser --username=root --email=example@example.com`
+
 # Common problems
-###  Your models have changes that are not yet reflected in a migration, and so won't be applied. Run 'manage.py 
-makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
-Run `python manage.py makemigrations`
+###  Your models have changes that are not yet reflected in a migration, and so won't be applied.
+As the error itself displays (error is self-explanatory).
+Run 'manage.py makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
 
 # Contributing
 
