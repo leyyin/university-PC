@@ -23,6 +23,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'debug_toolbar',
     'elearning'
 )
 
@@ -77,3 +79,7 @@ LOGIN_REDIRECT_URL = 'index'
 
 # Login url
 LOGIN_URL = 'login'
+
+# Django extensions
+# https://django-extensions.readthedocs.org/en/latest/shell_plus.html?highlight=shell_plus
+SHELL_PLUS = "bpython"
