@@ -12,10 +12,11 @@ class UserELearning(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=64)
 
-    class Meta:
-        permissions = (
-            ("read_car", "Can read Car"),
-        )
+
+class Course(models.Model):
+    name = models.CharField(max_length=64)
+    subject = models.ForeignKey(Subject)
+    users = models.ManyToManyField(User, through="Enrollment")
 
 
 class Enrollment(models.Model):
@@ -25,12 +26,6 @@ class Enrollment(models.Model):
 
     class Meta:
         unique_together = (('user', 'course'),)
-
-
-class Course(models.Model):
-    name = models.CharField(max_length=64)
-    subject = models.ForeignKey(Subject)
-    users = models.ManyToManyField(User, through=Enrollment)
 
 
 class Resource(models.Model):
@@ -65,16 +60,16 @@ class UserAssignment(models.Model):
         unique_together = (('user', 'assignment'),)
 
 
+class Question(models.Model):
+    question_index = models.PositiveSmallIntegerField()
+    type = models.CharField(max_length=128)
+
+
 class Test(models.Model):
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=1024)
     deadline = models.DateField()
     question = models.ForeignKey(Question)
-
-
-class Question(models.Model):
-    question_index = models.PositiveSmallIntegerField()
-    type = models.CharField(max_length=128)
 
 
 class UserTest(models.Model):
@@ -98,6 +93,10 @@ class UserGroup(models.Model):
         unique_together = (('user', 'group'),)
 
 
+class Priority(models.Model):
+    name = models.CharField(max_length=128)
+
+
 class Thread(models.Model):
     title = models.CharField(max_length=128)
     user = models.ForeignKey(User)
@@ -105,15 +104,11 @@ class Thread(models.Model):
     priority = models.ForeignKey(Priority)
 
 
-class Priority(models.Model):
-    name = models.CharField(max_length=128)
-
-
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
     user = models.ForeignKey(User)
     post_date = models.DateField()
-    comment = models.CharField(1024)
+    comment = models.CharField(max_length=1024)
 
 
 class Rating(models.Model):

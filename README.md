@@ -59,7 +59,7 @@ Run `python manage.py reset_db`
 ### Go into a django shell
 Run `python manage.py shell_plus` 
 
-## Create a super user
+### Create a super user
 Run `python manage.py createsuperuser --username=root --email=example@example.com`
 
 # Common problems
