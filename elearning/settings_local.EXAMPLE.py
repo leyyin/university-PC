@@ -33,6 +33,10 @@ DATABASES = {
     }
 }
 
+# Django extensions
+# https://django-extensions.readthedocs.org/en/latest/shell_plus.html?highlight=shell_plus
+SHELL_PLUS = "ipython"
+
 # Mysql
 # DATABASES = {
 #     'default': {

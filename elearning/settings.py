@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-from elearning.settings_local import DEBUG, BASE_DIR, DATABASES, SECRET_KEY, PROJECT_NAME
+from elearning.settings_local import DEBUG, BASE_DIR, DATABASES, SECRET_KEY, PROJECT_NAME, SHELL_PLUS
 
 # Application definition
 INSTALLED_APPS = (
@@ -80,6 +80,3 @@ LOGIN_REDIRECT_URL = 'index'
 # Login url
 LOGIN_URL = 'login'
 
-# Django extensions
-# https://django-extensions.readthedocs.org/en/latest/shell_plus.html?highlight=shell_plus
-SHELL_PLUS = "bpython"
