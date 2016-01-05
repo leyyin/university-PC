@@ -44,8 +44,8 @@ See `Common steps` below.
 environment:
 `cp elearning/settings_local.EXAMPLE.py elearning/settings_local.py`
 
-6. Create your database tables (you must do this every time you change the models):
-`python manage.py migrate`
+6. Create your database tables and insert default data (you must do this every time you change the models):
+`python manage.py init`
 
 # Run
 WARNING!!! Be sure your virtual environment is activated.
