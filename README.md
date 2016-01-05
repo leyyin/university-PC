@@ -1,6 +1,9 @@
 # university-PC
 Group project for university.
 
+# Build Status
+[![Build Status](https://travis-ci.org/leyyin/university-PC.svg?branch=master)](https://travis-ci.org/leyyin/university-PC)
+
 # Requirements
 - Python >= 3.4 https://www.python.org/downloads/
 - Git https://confluence.atlassian.com/bitbucket/set-up-git-744723531.html
@@ -47,8 +50,22 @@ environment:
 # Run
 WARNING!!! Be sure your virtual environment is activated.
 Command:
-`python manage.py runserver`
+`python manage.py runserver_plus`
 
+# Common Tasks
+### Remove all the tables
+Run `python manage.py reset_db`
+
+### Go into a django shell
+Run `python manage.py shell_plus` 
+
+## Create a super user
+Run `python manage.py createsuperuser --username=root --email=example@example.com`
+
+# Common problems
+###  Your models have changes that are not yet reflected in a migration, and so won't be applied.
+As the error itself displays (error is self-explanatory).
+Run 'manage.py makemigrations' to make new migrations, and then re-run 'manage.py migrate' to apply them.
 
 # Contributing
 
