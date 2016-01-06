@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class UserELearning(models.Model):
-    user = models.OneToOneField(User, unique=True)
+    user = models.OneToOneField(User, primary_key=True)
     address = models.CharField(max_length=64)
     phone = models.CharField(max_length=16)
     CNP = models.CharField(max_length=13)
