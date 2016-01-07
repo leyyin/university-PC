@@ -2,7 +2,8 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.contrib.auth.models import Group
 from django.db import OperationalError
-
+from elearning.models import UserELearning
+from django.contrib.auth.models import User
 
 def insert_data():
     # Store key: object returned
@@ -14,6 +15,8 @@ def insert_data():
 
     for group in groups:
         groups[group] = Group.objects.create(name=group)
+
+    UserELearning.objects.create_user("test_user", "test@gmail.com", "test_user", "first", "name", "hell")
 
 
 class Command(BaseCommand):

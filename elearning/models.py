@@ -2,11 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class UserELearningManager(models.Manager):
+    def create_user(self, username, email, password, first_name=None, last_name=None, address=None, phone=None,
+                    cnp=None):
+        user = User.objects.create_user(username=username, email=email, password=password, last_name=last_name,
+                                        first_name=first_name)
+
+        user_elearning = self.model(user=user, address=address, phone=phone, CNP=cnp)
+        user_elearning.save(using=self._db)
+
+        return user_elearning
+
+
 class UserELearning(models.Model):
     user = models.OneToOneField(User, primary_key=True)
-    address = models.CharField(max_length=64)
-    phone = models.CharField(max_length=16)
-    CNP = models.CharField(max_length=13)
+    address = models.CharField(max_length=64, null=True)
+    phone = models.CharField(max_length=16, null=True)
+    CNP = models.CharField(max_length=13, null=True)
+    objects = UserELearningManager()
 
 
 class Subject(models.Model):
