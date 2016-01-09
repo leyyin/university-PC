@@ -63,6 +63,5 @@ target/
 
 # Project specific
 .idea/
-static/
 settings_local.py
 *.sqlite3
