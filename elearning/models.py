@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class UserELearningManager(models.Manager):
@@ -21,6 +21,10 @@ class UserELearning(models.Model):
     CNP = models.CharField(max_length=13, null=True)
     objects = UserELearningManager()
 
+    def add_to_group(self, name):
+        group = Group.objects.get(name=name)
+        self.user.groups.add(group)
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=64)
@@ -29,11 +33,22 @@ class Subject(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=64)
     subject = models.ForeignKey(Subject)
-    users = models.ManyToManyField(User, through="Enrollment")
+    students = models.ManyToManyField(UserELearning, related_name="student_course", through="Enrollment")
+    teacher = models.ForeignKey(UserELearning, related_name="teacher_course")
+    assistants = models.ManyToManyField(UserELearning, related_name="assistant_course", through="AssistantCourse")
+
+
+# Intermediary model that manage the many-to-many relationship between Assistant and Course
+class AssistantCourse(models.Model):
+    user = models.ForeignKey(UserELearning)
+    course = models.ForeignKey(Course)
+    starting_date = models.DateField()
+    class Meta:
+        unique_together = (('user', 'course'),)
 
 
 class Enrollment(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserELearning)
     course = models.ForeignKey(Course)
     enroll_date = models.DateField()
 
@@ -54,20 +69,49 @@ class Lecture(models.Model):
     resource = models.ForeignKey(Resource)
 
 
+# Model for grouping the assignments
+class AssignmentGroup(models.Model):
+    name = models.CharField(max_length=64)
+
+
+# Model for grouping the students
+class StudentGroup(models.Model):
+    name = models.CharField(max_length=64)
+
+
+# An assignment has a type, can be linked to a student or to a group of students
+# and has an AssignmentGroup
 class Assignment(models.Model):
+    ASSIGNMENT_TYPES=(
+        ("PD", "Physical Delivery"),  #Predare in format fizic
+        ("ND", "No Delivery"),  #Fara predare
+        ("UD", "Upload Delivery"), #Cu incarcare fisiere
+        ("LD", "Link Delivery"), #Ca si legatura(link, url)
+        ("FA", "Fill-in Assignment"), #Cu completare text
+        ("GA", "Group Assignment")
+    )
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=1024)
     deadline = models.DateField()
+    type = models.CharField(max_length=2, choices=ASSIGNMENT_TYPES)
+    students = models.ManyToManyField(UserELearning, through="StudentAssignment")
+    group = models.ForeignKey(AssignmentGroup)
 
 
-class Delivery(models.Model):
-    type = models.CharField(max_length=128)
-
-
-class UserAssignment(models.Model):
-    user = models.ForeignKey(User)
+# Intermediary model that manage the many-to-many relationship between Assignment and StudentGroup
+class StudentGroupAssignment(models.Model):
+    student_group = models.ForeignKey(StudentGroup)
     assignment = models.ForeignKey(Assignment)
-    delivery = models.ForeignKey(Delivery)
+    grade = models.PositiveSmallIntegerField()
+    class Meta:
+        unique_together = (('student_group', 'assignment'),)
+
+
+# Intermediary model that manage the many-to-many relationship between Assignment and Student
+class StudentAssignment(models.Model):
+    user = models.ForeignKey(UserELearning)
+    assignment = models.ForeignKey(Assignment)
+    grade = models.PositiveSmallIntegerField()
 
     class Meta:
         unique_together = (('user', 'assignment'),)
@@ -82,28 +126,21 @@ class Test(models.Model):
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=1024)
     deadline = models.DateField()
+    time_limit = models.PositiveSmallIntegerField()
     question = models.ForeignKey(Question)
+    students = models.ManyToManyField(UserELearning, through="StudentTest")
+    assignment_group = models.ForeignKey(AssignmentGroup)
 
 
-class UserTest(models.Model):
-    user = models.ForeignKey(User)
+# Intermediary model that manage the many-to-many relationship between Student and Test
+class StudentTest(models.Model):
+    user = models.ForeignKey(UserELearning)
     test = models.ForeignKey(Test)
     date_taken = models.DateField()
+    grade = models.PositiveSmallIntegerField()
 
     class Meta:
         unique_together = (('user', 'test'),)
-
-
-class Group(models.Model):
-    name = models.CharField(max_length=128)
-
-
-class UserGroup(models.Model):
-    user = models.ForeignKey(User)
-    group = models.ForeignKey(Group)
-
-    class Meta:
-        unique_together = (('user', 'group'),)
 
 
 class Priority(models.Model):
@@ -112,20 +149,20 @@ class Priority(models.Model):
 
 class Thread(models.Model):
     title = models.CharField(max_length=128)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserELearning)
     thread_date = models.DateField()
     priority = models.ForeignKey(Priority)
 
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserELearning)
     post_date = models.DateField()
     comment = models.CharField(max_length=1024)
 
 
 class Rating(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserELearning)
     post = models.ForeignKey(Post)
     value = models.IntegerField()
 
