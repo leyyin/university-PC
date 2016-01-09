@@ -5,5 +5,8 @@
 @import "utils/helpers";
 @import "utils/settings";
 
+// Partials Import
+@import "partials/header/header";
+
 // Pages Import
 @import "pages/login/login";
