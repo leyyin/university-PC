@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,8 @@
     <title>{% block title %}eLearning App{% endblock %}</title>
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'elearning/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'elearning/css/responsive.css' %}">
 
     {% block head %}{% endblock %}
 </head>
@@ -13,6 +15,8 @@
 {% include 'partials/_header.html' %}
 {% block body %}{% endblock %}
 <!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<script src="{% static 'elearning/js/vendors/jquery.min.js' %}"></script>
+<script src="{% static 'elearning/js/vendors/materialize.min.js' %}"></script>
+<script src="{% static 'elearning/js/base.js' %}"></script>
 </body>
 </html>

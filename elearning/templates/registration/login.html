@@ -1,52 +1,51 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'elearning/css/base.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'elearning/css/responsive.css' %}" />
-{% endblock %}
 {% block body_attributes %}class="login"{% endblock %}
 
 {% block body %}
-    <div id="container">
-        <div id="header">
-            <div id="branding">
-                <h1 id="site-name"><a href="{% url 'index' %}">ELearning login</a></h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h1 class="login-title">
+                <a href="{% url 'index' %}">eLearning Login</a>
+            </h1>
         </div>
-
-        <div id="content" class="colM">
-            {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            <div id="content-main">
-                <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <label for="id_username">Username:</label>
-                        <input id="id_username" maxlength="254" name="username" type="text" />
-                    </div>
-                    <div class="form-row">
-                        <label for="id_password">Password:</label>
-                        <input id="id_password" name="password" type="password" />
-                        <input type="hidden" name="next" value="{{ next }}" />
-                    </div>
-                    <div class="submit-row">
-                        <label>&nbsp;</label><input type="submit" value="Log in" />
-                    </div>
-                </form>
-
-                <script type="text/javascript">
-                    document.getElementById('id_username').focus()
-                </script>
-            </div>
-
-            <br class="clear" />
-        </div>
-
-        <div id="footer"></div>
     </div>
+    <div class="row">
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+    </div>
+    <div class="row">
+        <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form" class="col s12">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s4 offset-s4">
+                    <input autocomplete="off" id="id_username" maxlength="254" name="username" type="text">
+                    <label for="id_username">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4 offset-s4">
+                    <input autocomplete="off" id="id_password" name="password" type="password">
+                    <label for="id_password">Password</label>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+            </div>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Login
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
 
 {# Assumes you setup the password_reset view in your URLconf #}
-{#    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+{#
+<p>
+    <a href="{% url 'password_reset' %}">Lost password?</a>
+</p>
+#}
