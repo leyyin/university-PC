@@ -35,5 +35,3 @@ def index(request):
 
     return render(request, 'index.html', context_instance=rc)
 
-
-

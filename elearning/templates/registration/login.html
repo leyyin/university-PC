@@ -1,59 +1,65 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load bootstrap3 %}
 
 {% block body_attributes %}class="login"{% endblock %}
 
 {% block body %}
+    <style>
+        .input-group {
+            margin-bottom: 25px;
+        }
+    </style>
     <div class="container">
-        <div class="row">
-            <div class="col s12">
-                <h1 class="login-title">
-                    <a href="{% url 'index' %}">eLearning Login</a>
-                </h1>
-            </div>
-        </div>
-        <div class="row center-align">
-            {% if form.errors %}
-                <div class="row">
-                    <div class="col s6 offset-s3">
-                        <div class="card-panel red">
-                    <span class="white-text">
-                        <p>Your username and password didn't match. Please try again.</p>
-                    </span>
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title"><a href="{% url 'index' %}">eLearning Login</a></div>
+                    <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot
+                        password?</a></div>
+                </div>
+
+                <div style="padding-top:30px" class="panel-body">
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <p>Your username and password didn't match. Please try again.</p>
                         </div>
-                    </div>
+                    {% endif %}
+                    <form action="{% url 'django.contrib.auth.views.login' %}" id="login-form" class="form-horizontal"
+                          role="form" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="login-username" type="text" class="form-control" name="username" value=""
+                                   placeholder="usernamel" required>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="login-password" type="password" class="form-control" name="password"
+                                   placeholder="password" required>
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <button class="btn btn-success btn-block" type="submit" name="action">
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            {% endif %}
-        </div>
-        <div class="row">
-            <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form" class="col s12">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="input-field col s4 offset-s4">
-                        <input autocomplete="off" id="id_username" maxlength="254" name="username" type="text">
-                        <label for="id_username">Username</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s4 offset-s4">
-                        <input autocomplete="off" id="id_password" name="password" type="password">
-                        <label for="id_password">Password</label>
-                        <input type="hidden" name="next" value="{{ next }}"/>
-                    </div>
-                </div>
-                <div class="row center-align">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        Login <i class="material-icons right">send</i>
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 {% endblock %}
-
-{# Assumes you setup the password_reset view in your URLconf #}
-{#
-<p>
-    <a href="{% url 'password_reset' %}">Lost password?</a>
-</p>
-#}

@@ -17,6 +17,10 @@ from elearning.settings_local import DEBUG, BASE_DIR, DATABASES, SECRET_KEY, PRO
 
 # Application definition
 INSTALLED_APPS = (
+    # See https://github.com/dyve/django-bootstrap3
+    'bootstrap3',
+    # See https://github.com/darklow/django-suit
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,3 +81,30 @@ LOGIN_REDIRECT_URL = 'index'
 
 # Login url
 LOGIN_URL = 'login'
+
+# see http://django-suit.readthedocs.org/en/develop/configuration.html
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'Admin Area'
+}
+
+
+# see http://django-bootstrap3.readthedocs.org/en/latest/settings.html
+BOOTSTRAP3 = {
+    # The URL to the jQuery JavaScript file
+    'jquery_url': STATIC_URL + 'elearning/js/vendors/jquery.min.js',
+
+    # The Bootstrap base URL
+    'base_url': STATIC_URL + 'elearning/',
+
+    # The complete URL to the Bootstrap CSS file (None means derive it from base_url)
+    'css_url': None,
+
+    # The complete URL to the Bootstrap CSS file (None means no theme)
+    'theme_url': None,
+
+    # The complete URL to the Bootstrap JavaScript file (None means derive it from base_url)
+    'javascript_url': STATIC_URL + 'elearning/js/vendors/bootstrap.min.js',
+
+    # Include jQuery with Bootstrap JavaScript (affects django-bootstrap3 template tags)
+    'include_jquery': True,
+}

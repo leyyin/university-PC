@@ -15,3 +15,5 @@ simplegeneric==0.8.1
 six==1.10.0
 sqlparse==0.1.18
 traitlets==4.0.0
+django-suit==0.2.15
+django-bootstrap3==6.2.2
