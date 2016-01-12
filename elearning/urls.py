@@ -29,5 +29,7 @@ urlpatterns = [
     url(r'^logout/', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
 
     # /admin
-    url(r'^admin/', include(admin.site.urls))
+    url(r'^admin/', include(admin.site.urls)),
+    # /course
+    url(r'^course/add-course/', views.add_course, name='add_course')
 ]

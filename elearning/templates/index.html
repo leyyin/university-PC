@@ -3,15 +3,10 @@
 {% block body %}
     {% if user.is_authenticated %}
         <p>Hi {{ user.username }}, <a href="{% url 'logout' %}">logout</a></p>
-        {% if type == "student"%}
+        {% if type == 'student'%}
             <table style="width:300px">
-                <tr>
-                    <th>
-                        Course name
-                    </th>
-                    <th>
-                        Enroll date
-                    </th>
+                <tr><th>Course name</th>
+                    <th>Enroll date</th>
                 </tr>
             {% for course, enroll_date in courses %}
                 <tr>
@@ -20,6 +15,19 @@
                 </tr>
             {% endfor %}
             </table>
+        {% elif type == 'teacher' %}
+                        <table style="width:300px">
+                <tr><th>Course name</th>
+                    <th>Subject</th>
+                </tr>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.subject.name }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            <a href="{%  url 'add_course' %}">Add course</a>
         {% endif %}
     {% else %}
         <p>Please <a href="{%  url 'login' %}">login</a> to see this page.</p>

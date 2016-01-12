@@ -36,6 +36,10 @@ class Course(models.Model):
     students = models.ManyToManyField(UserELearning, related_name="student_course", through="Enrollment")
     teacher = models.ForeignKey(UserELearning, related_name="teacher_course")
     assistants = models.ManyToManyField(UserELearning, related_name="assistant_course", through="AssistantCourse")
+    # TODO: write all the __str__ functions
+
+    def __str__(self):
+        return '[Name:'+self.name+';Subject:'+self.subject.name+']'
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
