@@ -13,6 +13,20 @@
 </head>
 <body {% block body_attributes %}{% endblock %}>
 {% include 'partials/_header.html' %}
+
+{# Display flash messages #}
+{% if messages %}
+<hr>
+{#    TODO display different messages depending on color#}
+    <h2>Messages</h2>
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+<hr>
+{% endif %}
+
 {% block body %}{% endblock %}
 <!-- Compiled and minified JavaScript -->
 <script src="{% static 'elearning/js/vendors/jquery.min.js' %}"></script>

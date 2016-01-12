@@ -16,9 +16,11 @@ def insert_data():
         "student": None
     }
 
+    # add groups
     for group in groups:
         groups[group] = Group.objects.create(name=group)
 
+    # add users
     admin = UserELearning.objects.create_user(username="admin", email="admin@gmail.com", password="admin",
                                               first_name="first", last_name="name", address="hell")
     admin.add_to_group("admin")
@@ -31,6 +33,8 @@ def insert_data():
     student.add_to_group("student")
     student2.add_to_group("student")
 
+    # add subjects and courses
+    math_subject = Subject.objects.create(name="Math")
     computer_science_subject = Subject.objects.create(name="Computer Science")
     compilers = Course.objects.create(name="Compilers", subject=computer_science_subject, teacher=teacher)
     machine_learning = Course.objects.create(name="Machine Learning", subject=computer_science_subject, teacher=teacher)
