@@ -79,3 +79,8 @@ LOGIN_REDIRECT_URL = 'index'
 
 # Login url
 LOGIN_URL = 'login'
+
+# see http://django-suit.readthedocs.org/en/develop/configuration.html
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'Admin Area'
+}

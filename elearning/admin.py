@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(UserELearning)
 class UserELearningAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'address', 'phone', 'CNP')
 
 
 @admin.register(Subject)
