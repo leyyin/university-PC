@@ -4,13 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template.context import RequestContext
 
-from elearning.course.forms import AddCourseForm
+
 from elearning.models import Enrollment, UserELearning, Course
+from elearning.utils import get_current_user
 
-
-# Returns the current elearning user
-def get_current_user(request):
-    return UserELearning.objects.get(user=request.user)
 
 
 @login_required
@@ -39,17 +36,4 @@ def index(request):
     return render(request, 'index.html', context_instance=rc)
 
 
-@login_required
-def add_course(request):
-    if request.method == 'POST':
-        user = get_current_user(request)
-        form = AddCourseForm(request.POST)
-        if form.is_valid():
-            Course.objects.create(name=form.cleaned_data['name'], subject=form.cleaned_data['subject'],
-                                  teacher=user)
-            messages.success(request, "Course created")
-            return redirect('index')
-    else:
-        form = AddCourseForm()
 
-    return render(request, 'course/add_course.html', {'form': form.as_table()})

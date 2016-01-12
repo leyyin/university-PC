@@ -29,7 +29,10 @@
                     </tr>
                 {% endfor %}
             </table>
-            <a href="{% url 'add_course' %}">Add course</a>
+            <a href="{% url 'add_course' %}">Add course</a><br>
+
+        {% else %}
+             <a href="{% url 'see_courses' %}">Edit courses</a>
         {% endif %}
     {% else %}
         <p>Please <a href="{% url 'login' %}">login</a> to see this page.</p>

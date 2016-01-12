@@ -25,6 +25,8 @@ class UserELearning(models.Model):
         group = Group.objects.get(name=name)
         self.user.groups.add(group)
 
+    def __str__(self):              # __unicode__ on Python 2
+        return self.user.last_name +" "+ self.user.first_name
 
 class Subject(models.Model):
     name = models.CharField(max_length=64)

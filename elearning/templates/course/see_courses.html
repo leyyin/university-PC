@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+    <form action="{% url 'see_courses' %} #}" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table>
+        <tr>
+            <th>Name</th>
+            <th>Subject</th>
+        </tr>
+            {{ formset }}
+{#        {% for form in formset %}#}
+{#            {{ form }}#}
+{#            <tr>#}
+{#                {{ form.id }}#}
+{#                <td>{{ form.name }}</td>#}
+{#                <td>{{ form.subject }}</td>#}
+{#                <td>{{ form.teacher }}</td>#}
+{#                {% if formset.can_delete %}#}
+{#                    <td><p>{{ form.DELETE }}<label for={{ form.DELETE.auto_id }}>Delete</label></p></td>#}
+{#                {% endif %}#}
+{#            </tr>#}
+{#        {% endfor %}#}
+        </table>
+        <input type="submit" class="waves-effect waves-light btn" value="Submit"/>
+    </form>
+{% endblock %}
