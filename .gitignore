@@ -62,6 +62,7 @@ docs/_build/
 target/
 
 # Project specific
-.idea/
+.idea
 settings_local.py
 *.sqlite3
+.sass-cache

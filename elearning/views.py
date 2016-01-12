@@ -52,4 +52,4 @@ def add_course(request):
     else:
         form = AddCourseForm()
 
-    return render(request, 'course/add_course.html', {'form': form.as_table()})
+    return render(request, 'course/add_course.html', {'form': form})

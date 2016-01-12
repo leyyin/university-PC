@@ -1,5 +1,4 @@
 // Vendors Import
-@import "vendors/materialize.min";
 
 // Utils Import
 @import "utils/fonts";
@@ -13,3 +12,7 @@
 
 // Pages Import
 @import "pages/login/login";
+
+body {
+  padding-top: 70px;
+}
