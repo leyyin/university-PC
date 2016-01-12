@@ -16,15 +16,14 @@
 <body {% block body_attributes %}{% endblock %}>
 {% include 'partials/_header.html' %}
 
-{# Display flash messages #}
-{% if messages %}
-<hr>
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-<hr>
-{% endif %}
-
 <div class="container">
+    {# Display flash messages #}
+    {% if messages %}
+    <hr>
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    <hr>
+    {% endif %}
     {% block body %}{% endblock %}
 </div>
 
