@@ -39,6 +39,9 @@ class UserELearning(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.name
+
 
 class Course(models.Model):
     name = models.CharField(max_length=64)
@@ -50,7 +53,7 @@ class Course(models.Model):
     # TODO: write all the __str__ functions
 
     def __str__(self):
-        return '[Name:' + self.name + ';Subject:' + self.subject.name + ']'
+        return '{1} {0}'.format(self.name, self.subject.name)
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
@@ -89,10 +92,16 @@ class Lecture(models.Model):
 class AssignmentGroup(models.Model):
     name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.name
+
 
 # Model for grouping the students
 class StudentGroup(models.Model):
     name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.name
 
 
 # An assignment has a type, can be linked to a student or to a group of students
@@ -162,6 +171,9 @@ class StudentTest(models.Model):
 
 class Priority(models.Model):
     name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
 
 
 class Thread(models.Model):

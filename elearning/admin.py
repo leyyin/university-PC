@@ -9,12 +9,12 @@ class UserELearningAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name',)
 
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'subject')
 
 
 @admin.register(AssistantCourse)
