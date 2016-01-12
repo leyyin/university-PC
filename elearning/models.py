@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User, Group
+from django.db import models
 
 
 class UserELearningManager(models.Manager):
@@ -36,10 +36,11 @@ class Course(models.Model):
     students = models.ManyToManyField(UserELearning, related_name="student_course", through="Enrollment")
     teacher = models.ForeignKey(UserELearning, related_name="teacher_course")
     assistants = models.ManyToManyField(UserELearning, related_name="assistant_course", through="AssistantCourse")
+
     # TODO: write all the __str__ functions
 
     def __str__(self):
-        return '[Name:'+self.name+';Subject:'+self.subject.name+']'
+        return '[Name:' + self.name + ';Subject:' + self.subject.name + ']'
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
@@ -47,6 +48,7 @@ class AssistantCourse(models.Model):
     user = models.ForeignKey(UserELearning)
     course = models.ForeignKey(Course)
     starting_date = models.DateField()
+
     class Meta:
         unique_together = (('user', 'course'),)
 
@@ -86,12 +88,12 @@ class StudentGroup(models.Model):
 # An assignment has a type, can be linked to a student or to a group of students
 # and has an AssignmentGroup
 class Assignment(models.Model):
-    ASSIGNMENT_TYPES=(
-        ("PD", "Physical Delivery"),  #Predare in format fizic
-        ("ND", "No Delivery"),  #Fara predare
-        ("UD", "Upload Delivery"), #Cu incarcare fisiere
-        ("LD", "Link Delivery"), #Ca si legatura(link, url)
-        ("FA", "Fill-in Assignment"), #Cu completare text
+    ASSIGNMENT_TYPES = (
+        ("PD", "Physical Delivery"),  # Predare in format fizic
+        ("ND", "No Delivery"),  # Fara predare
+        ("UD", "Upload Delivery"),  # Cu incarcare fisiere
+        ("LD", "Link Delivery"),  # Ca si legatura(link, url)
+        ("FA", "Fill-in Assignment"),  # Cu completare text
         ("GA", "Group Assignment")
     )
     name = models.CharField(max_length=64)
@@ -107,6 +109,7 @@ class StudentGroupAssignment(models.Model):
     student_group = models.ForeignKey(StudentGroup)
     assignment = models.ForeignKey(Assignment)
     grade = models.PositiveSmallIntegerField()
+
     class Meta:
         unique_together = (('student_group', 'assignment'),)
 
@@ -172,4 +175,3 @@ class Rating(models.Model):
 
     class Meta:
         unique_together = (('user', 'post'),)
-

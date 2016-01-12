@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
-<form action="/course/add-course/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form>
+    <form action="/course/add-course/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit"/>
+    </form>
 {% endblock %}x

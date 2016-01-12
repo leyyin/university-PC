@@ -1,10 +1,10 @@
 #!/usr/bin/python
-from django.contrib.auth.models import Group
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.template.context import RequestContext
-from elearning.models import Enrollment, UserELearning, Course
+
 from elearning.course.forms import AddCourseForm
+from elearning.models import Enrollment, UserELearning, Course
 
 
 @login_required
@@ -25,10 +25,11 @@ def index(request):
         return render(request, 'index.html', context_instance=rc)
 
     rc = RequestContext(request, {
-            "type": type,
-            "courses": courses
-        })
+        "type": type,
+        "courses": courses
+    })
     return render(request, 'index.html', context_instance=rc)
+
 
 @login_required
 def add_course(request):
@@ -36,7 +37,8 @@ def add_course(request):
         user_elearning = UserELearning.objects.get(user=request.user)
         form = AddCourseForm(request.POST)
         if form.is_valid():
-            query = Course.objects.create(name=form.cleaned_data['name'], subject=form.cleaned_data['subject'],teacher=user_elearning)
+            query = Course.objects.create(name=form.cleaned_data['name'], subject=form.cleaned_data['subject'],
+                                          teacher=user_elearning)
             print(query)
 
     else:

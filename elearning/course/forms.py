@@ -1,10 +1,10 @@
-from django.forms import ModelForm
 from django import forms
+from django.forms import ModelForm
+
 from elearning.models import Course, Subject
 
 
 class AddCourseForm(ModelForm):
-
     class Meta:
         model = Course
         fields = ['name']
@@ -14,4 +14,3 @@ class AddCourseForm(ModelForm):
             return obj.name
 
     subject = SubjectModelChoiceField(queryset=Subject.objects.all(), empty_label=None)
-

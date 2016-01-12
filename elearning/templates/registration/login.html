@@ -4,51 +4,51 @@
 {% block body_attributes %}class="login"{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-            <h1 class="login-title">
-                <a href="{% url 'index' %}">eLearning Login</a>
-            </h1>
-        </div>
-    </div>
-    <div class="row center-align">
-        {% if form.errors %}
+    <div class="container">
         <div class="row">
-            <div class="col s6 offset-s3">
-                <div class="card-panel red">
+            <div class="col s12">
+                <h1 class="login-title">
+                    <a href="{% url 'index' %}">eLearning Login</a>
+                </h1>
+            </div>
+        </div>
+        <div class="row center-align">
+            {% if form.errors %}
+                <div class="row">
+                    <div class="col s6 offset-s3">
+                        <div class="card-panel red">
                     <span class="white-text">
                         <p>Your username and password didn't match. Please try again.</p>
                     </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
-    <div class="row">
-        <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form" class="col s12">
-            {% csrf_token %}
-            <div class="row">
-                <div class="input-field col s4 offset-s4">
-                    <input autocomplete="off" id="id_username" maxlength="254" name="username" type="text">
-                    <label for="id_username">Username</label>
+        <div class="row">
+            <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form" class="col s12">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="input-field col s4 offset-s4">
+                        <input autocomplete="off" id="id_username" maxlength="254" name="username" type="text">
+                        <label for="id_username">Username</label>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s4 offset-s4">
-                    <input autocomplete="off" id="id_password" name="password" type="password">
-                    <label for="id_password">Password</label>
-                    <input type="hidden" name="next" value="{{ next }}" />
+                <div class="row">
+                    <div class="input-field col s4 offset-s4">
+                        <input autocomplete="off" id="id_password" name="password" type="password">
+                        <label for="id_password">Password</label>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row center-align">
-                <button class="btn waves-effect waves-light" type="submit" name="action">
-                    Login <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </form>
+                <div class="row center-align">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Login <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {# Assumes you setup the password_reset view in your URLconf #}
