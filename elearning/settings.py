@@ -17,6 +17,8 @@ from elearning.settings_local import DEBUG, BASE_DIR, DATABASES, SECRET_KEY, PRO
 
 # Application definition
 INSTALLED_APPS = (
+    # See https://github.com/darklow/django-suit
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
