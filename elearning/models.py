@@ -25,6 +25,13 @@ class UserELearning(models.Model):
         group = Group.objects.get(name=name)
         self.user.groups.add(group)
 
+    def grant_admin_rights(self):
+        self.add_to_group("admin")
+        self.user.is_staff = True
+        # TODO custom specify model permissions
+        self.user.is_superuser = True
+        self.user.save()
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=64)

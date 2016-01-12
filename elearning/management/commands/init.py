@@ -23,7 +23,7 @@ def insert_data():
     # add users
     admin = UserELearning.objects.create_user(username="admin", email="admin@gmail.com", password="admin",
                                               first_name="first", last_name="name", address="hell")
-    admin.add_to_group("admin")
+    admin.grant_admin_rights()
 
     teacher = UserELearning.objects.create_user(username="teacher", email="teacher@gmail.com", password="teacher",
                                                 first_name="first", last_name="name", address="hell")
