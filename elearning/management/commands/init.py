@@ -13,6 +13,7 @@ def insert_data():
     groups = {
         "admin": None,
         "teacher": None,
+        "assistant": None,
         "student": None
     }
 
@@ -22,13 +23,21 @@ def insert_data():
 
     # add users
     admin = UserELearning.objects.create_user(username="admin", email="admin@gmail.com", password="admin",
-                                              first_name="first", last_name="name", address="hell")
+                                              first_name="Jesus", last_name="Wagner", address="hell")
     admin.grant_admin_rights()
 
     teacher = UserELearning.objects.create_user(username="teacher", email="teacher@gmail.com", password="teacher",
-                                                first_name="first", last_name="name", address="hell")
+                                                first_name="Derrick", last_name="Grant", address="hell")
     teacher.add_to_group("teacher")
-    student = UserELearning.objects.create_user("student", "student@gmail.com", "student", "first", "name", "hell")
+
+    teacher2 = UserELearning.objects.create_user(username="teacher2", email="teacher2@gmail.com", password="teacher2",
+                                                first_name="Ernest", last_name="Haynes", address="hell")
+    teacher2.add_to_group("teacher")
+
+    assitant = UserELearning.objects.create_user(username="assistant", email="assistant@gmail.com", password="assistant",
+                                                first_name="Judy", last_name="Riley", address="hell")
+    assitant.add_to_group("assistant")
+    student = UserELearning.objects.create_user("student", "student@gmail.com", "student", "Beatrice", "Stevenson", "hell")
     student2 = UserELearning.objects.create_user("student2", "student2@gmail.com", "student2", "John", "Doe", "heaven")
     student.add_to_group("student")
     student2.add_to_group("student")

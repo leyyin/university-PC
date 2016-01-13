@@ -6,8 +6,8 @@ from django.template.context import RequestContext
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
 
-from elearning.course.forms import SimpleCourseForm, AdminEditCourseForm
-from elearning.models import Enrollment, UserELearning, Course
+from elearning.course.forms import SimpleCourseForm, AdminEditCourseForm, TeacherEditCourseForm
+from elearning.models import Enrollment, UserELearning, Course, AssistantCourse
 from elearning.utils import get_current_user
 
 
@@ -24,7 +24,7 @@ def add_course(request):
     else:
         form = SimpleCourseForm()
 
-    return render(request, 'course/add_course.html', {'form': form.as_table()})
+    return render(request, 'course/add_course.html', {'form': form})
 
 
 @login_required
@@ -33,23 +33,40 @@ def see_courses(request):
     user = get_current_user(request)
     user_is_admin = request.user.groups.filter(name='admin').exists()
     can_delete = True if user_is_admin else False
-    used_form = AdminEditCourseForm if user_is_admin else SimpleCourseForm
+    used_form = AdminEditCourseForm if user_is_admin else TeacherEditCourseForm
     if user_is_admin:
-        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject',"teacher","students"), can_delete=can_delete, form=used_form, max_num=1)
+        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject','teacher','assistants', 'students'), can_delete=can_delete, form=used_form, max_num=1)
     else:
-        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject'), can_delete=can_delete, form=used_form, max_num=1)
+        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject','assistants','students'), can_delete=can_delete, form=used_form, max_num=1)
     if request.method == 'POST':
         formset = CourseFormSet(request.POST, request.FILES)
         if user_is_admin:
             if formset.is_valid():
-                formset.save()
+                for form in formset:
+                    course = form.save(commit=False)
+                    #TODO get rid of this UGLY WAY
+                    Enrollment.objects.filter(course=course).delete()
+                    for student in form.clean_students():
+                        Enrollment.objects.create(user=student, course=course)
+                    AssistantCourse.objects.filter(course=course).delete()
+                    for assistant in form.clean_assistants():
+                        AssistantCourse.objects.create(user=assistant, course=course)
+                    course.save()
+                messages.success(request, "Courses successfully edited.")
             else:
                 messages.error(request, "ERROR" + formset.errors.__str__())
+            return redirect('index')
         else:
             if formset.is_valid():
                 for form in formset:
                     course = form.save(commit=False)
                     course.teacher = user
+                    Enrollment.objects.filter(course=course).delete()
+                    for student in form.clean_students():
+                        Enrollment.objects.create(user=student, course=course)
+                    AssistantCourse.objects.filter(course=course).delete()
+                    for assistant in form.clean_assistants():
+                        AssistantCourse.objects.create(user=assistant, course=course)
                     course.save()
                 messages.success(request, "Courses successfully edited.")
             else:
@@ -61,6 +78,4 @@ def see_courses(request):
             formset = CourseFormSet(queryset=Course.objects.all())
         else:
             formset = CourseFormSet(queryset=Course.objects.filter(teacher=user))
-
-
     return render(request, 'course/see_courses.html', {'formset': formset})

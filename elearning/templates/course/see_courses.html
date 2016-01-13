@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
 {% block body %}
     <form action="{% url 'see_courses' %} #}" method="post">
         {% csrf_token %}
-        {{ formset.management_form }}
-        <table>
-        <tr>
-            <th>Name</th>
-            <th>Subject</th>
-        </tr>
-            {{ formset }}
+{#        {{ formset.management_form }}#}
+{#        <table>#}
+{#        <tr>#}
+{#            <th>Name</th>#}
+{#            <th>Subject</th>#}
+{#        </tr>#}
+            {% bootstrap_formset formset layout='horizontal'%}
+{#            {{ formset }}#}
 {#        {% for form in formset %}#}
+{#            {% bootstrap_form form %}#}
+{#            {% for field in form %}#}
+{#                {{ field }}#}
 {#            {{ form }}#}
 {#            <tr>#}
 {#                {{ form.id }}#}
@@ -20,8 +25,9 @@
 {#                    <td><p>{{ form.DELETE }}<label for={{ form.DELETE.auto_id }}>Delete</label></p></td>#}
 {#                {% endif %}#}
 {#            </tr>#}
+{#            {% endfor %}#}
 {#        {% endfor %}#}
-        </table>
-        <input type="submit" class="waves-effect waves-light btn" value="Submit"/>
+{#        </table>#}
+        <input type="submit" class="btn btn-default" value="Submit"/>
     </form>
 {% endblock %}

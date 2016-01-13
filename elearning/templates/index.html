@@ -2,7 +2,7 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-        <p>Hi {{ user.username }}, <a href="{% url 'logout' %}">logout</a></p>
+        <p>Hi {{ user.first_name }}({{ user.username }}), <a href="{% url 'logout' %}">logout</a></p>
         {% if type == 'student' %}
             <table class="table">
                 <tr>
@@ -30,7 +30,7 @@
                 {% endfor %}
             </table>
             <a href="{% url 'add_course' %}">Add course</a><br>
-
+            <a href="{% url 'see_courses' %}">Edit your courses</a>
         {% else %}
              <a href="{% url 'see_courses' %}">Edit courses</a>
         {% endif %}

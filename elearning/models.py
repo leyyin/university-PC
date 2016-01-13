@@ -60,7 +60,7 @@ class Course(models.Model):
 class AssistantCourse(models.Model):
     user = models.ForeignKey(UserELearning)
     course = models.ForeignKey(Course)
-    starting_date = models.DateField()
+    starting_date = models.DateField(auto_now=True)
 
     class Meta:
         unique_together = (('user', 'course'),)
@@ -69,7 +69,7 @@ class AssistantCourse(models.Model):
 class Enrollment(models.Model):
     user = models.ForeignKey(UserELearning)
     course = models.ForeignKey(Course)
-    enroll_date = models.DateField()
+    enroll_date = models.DateField(auto_now=True)
 
     class Meta:
         unique_together = (('user', 'course'),)
@@ -179,14 +179,14 @@ class Priority(models.Model):
 class Thread(models.Model):
     title = models.CharField(max_length=128)
     user = models.ForeignKey(UserELearning)
-    thread_date = models.DateField()
+    thread_date = models.DateField(auto_now=True)
     priority = models.ForeignKey(Priority)
 
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
     user = models.ForeignKey(UserELearning)
-    post_date = models.DateField()
+    post_date = models.DateField(auto_now=True)
     comment = models.CharField(max_length=1024)
 
 
