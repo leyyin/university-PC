@@ -20,3 +20,6 @@ django-bootstrap3==6.2.2
 django-scheduler==0.7.5
 django-wysiwyg==0.7.1
 django-ckeditor==5.0.2
+pybbm==0.17.3
+markdown==2.6.5
+bbcode

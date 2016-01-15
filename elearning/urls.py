@@ -40,4 +40,8 @@ urlpatterns = [
 
     # /schedule
     url(r'^schedule/', include('schedule.urls')),
+
+    # /forum
+    url(r'^forums/', include('pybb.urls', namespace='pybb'))
+
 ] + staticfiles_urlpatterns()

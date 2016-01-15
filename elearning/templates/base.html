@@ -1,13 +1,25 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
+{% load url from future %}
+{% load i18n pybb_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}eLearning App{% endblock %}</title>
+    {% if  '/forums' in request.path %}
+        <link rel="stylesheet" href="{% static 'elearning/css/bootstrap2.min.css' %}">
+    {% else %}
+        {% bootstrap_css %}
+    {% endif %}
+
+    {# For forum #}
+    {% block extra_head %}{% endblock %}
+    {% block extra_style %}{% endblock %}
 
     <!-- Compiled and minified CSS -->
-    {% bootstrap_css %}
+
     <link rel="stylesheet" href="{% static 'elearning/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'elearning/css/responsive.css' %}">
 
@@ -22,16 +34,27 @@
 <div class="container">
     {# Display flash messages #}
     {% if messages %}
-    <hr>
+        <hr>
         {# Display django.contrib.messages as Bootstrap alerts #}
         {% bootstrap_messages %}
-    <hr>
+        <hr>
     {% endif %}
+
+    {# For forum #}
+    {% block breadcrumb %}{% endblock %}
+
     {% block body %}{% endblock %}
+
+    {# For forum #}
+    {% block content %}{% endblock %}
+
+    <!-- Compiled and minified JavaScript -->
+    {% bootstrap_javascript %}
+    <script type="text/javascript" src="{% static 'pybb/js/pybbjs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pybb/js/jquery.formset.min.js' %}"></script>
+    {% block extra_script %}{% endblock %}
+    <script src="{% static 'elearning/js/base.js' %}"></script>
 </div>
 
-<!-- Compiled and minified JavaScript -->
-{% bootstrap_javascript %}
-<script src="{% static 'elearning/js/base.js' %}"></script>
 </body>
 </html>

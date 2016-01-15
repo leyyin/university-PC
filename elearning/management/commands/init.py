@@ -6,10 +6,11 @@ from django.core.management.base import BaseCommand
 from django.db import OperationalError
 
 from elearning.models import UserELearning, Subject, Course, Enrollment
+from elearning.utils import create_forums_course
 
 
 def insert_data():
-    # Store key: object returned
+    # Store  key: object returned
     groups = {
         "admin": None,
         "teacher": None,
@@ -51,6 +52,9 @@ def insert_data():
     Enrollment.objects.create(user=student2, course=compilers, enroll_date=date(2015, 9, 3))
     Enrollment.objects.create(user=student, course=machine_learning, enroll_date=date(2015, 9, 3))
 
+    # add forums
+    create_forums_course(compilers)
+    create_forums_course(machine_learning)
 
 class Command(BaseCommand):
     help = 'Initialises the database from scratch'

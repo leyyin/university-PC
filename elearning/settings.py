@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+
     # See https://github.com/llazzaro/django-scheduler
     'schedule',
 
@@ -46,6 +47,10 @@ INSTALLED_APPS = (
 
     'django_extensions',
     'debug_toolbar',
+
+    # See https://github.com/hovel/pybbm
+    'pybb',
+
     'elearning'
 )
 
@@ -58,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'pybb.middleware.PybbMiddleware',
 )
 
 ROOT_URLCONF = 'elearning.urls'
@@ -74,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'pybb.context_processors.processor'
             ],
         },
     },
@@ -137,3 +144,8 @@ CKEDITOR_JQUERY_URL = JQUERY_URL
 # See https://github.com/pydanny/django-wysiwyg/#using-the-ckeditor
 DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL
+
+# See http://pybbm.readthedocs.org/en/latest/index.html
+PYBB_MARKUP = 'markdown'
+PYBB_SMILES_PREFIX = STATIC_URL + 'pybb/emoticons/'
+PYBB_ATTACHMENT_ENABLE = True
