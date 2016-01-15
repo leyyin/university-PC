@@ -21,12 +21,21 @@ INSTALLED_APPS = (
     'bootstrap3',
     # See https://github.com/darklow/django-suit
     'suit',
+
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+
+    # See https://github.com/llazzaro/django-scheduler
+    'schedule',
+
     'django_extensions',
     'debug_toolbar',
     'elearning'
@@ -67,7 +76,9 @@ WSGI_APPLICATION = 'elearning.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+TIME_ZONE = 'Europe/Bucharest'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True

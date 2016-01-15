@@ -66,6 +66,10 @@ class Command(BaseCommand):
             self.stdout.write("\nRetrying Creating tables")
             call_command("migrate", verbosity=3, interactive=False)
 
+        self.stdout.write("\nLoading example calendar data")
+        call_command("load_example_data", verbosity=3, interactive=False)
+        call_command("load_sample_data", verbosity=3, interactive=False)
+
         self.stdout.write("\nInserting data")
         insert_data()
 

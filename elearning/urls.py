@@ -30,7 +30,12 @@ urlpatterns = [
 
     # /admin
     url(r'^admin/', include(admin.site.urls)),
+
     # /course
     url(r'^course/add-course/', course_views.add_course, name='add_course'),
-    url(r'^course/see-courses/', course_views.see_courses, name='see_courses')
+    url(r'^course/see-courses/', course_views.see_courses, name='see_courses'),
+
+    # /schedule
+    url(r'^schedule/', include('schedule.urls')),
 ]
+
