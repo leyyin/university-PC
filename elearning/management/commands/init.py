@@ -73,4 +73,7 @@ class Command(BaseCommand):
         self.stdout.write("\nInserting data")
         insert_data()
 
+        # self.stdout.write("\nCollecting static files")
+        # call_command("collectstatic", verbosity=3, interactive=False)
+
         self.stdout.write("SUCCESS")

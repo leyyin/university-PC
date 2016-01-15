@@ -16,9 +16,12 @@ Including another URLconf
 import django.contrib.auth.views as auth_views
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from . import views
 from .course import views as course_views
+
+
 urlpatterns = [
     # /
     url(r'^$', views.index, name='index'),
@@ -37,5 +40,4 @@ urlpatterns = [
 
     # /schedule
     url(r'^schedule/', include('schedule.urls')),
-]
-
+] + staticfiles_urlpatterns()
