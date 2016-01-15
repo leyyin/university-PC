@@ -53,7 +53,7 @@ class Course(models.Model):
     # TODO: write all the __str__ functions
 
     def __str__(self):
-        return '{0} {1}'.format(self.name, self.subject.name)
+        return '{0} | {1}'.format(self.name, self.subject.name)
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
