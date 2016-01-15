@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.db import OperationalError
 
-from elearning.models import UserELearning, Subject, Course, Enrollment
+from elearning.models import UserELearning, Subject, Course, Enrollment, AssignmentGroup, Assignment, StudentAssignment
 
 
 def insert_data():
@@ -50,6 +50,10 @@ def insert_data():
     Enrollment.objects.create(user=student, course=compilers, enroll_date=date(2015, 9, 3))
     Enrollment.objects.create(user=student2, course=compilers, enroll_date=date(2015, 9, 3))
     Enrollment.objects.create(user=student, course=machine_learning, enroll_date=date(2015, 9, 3))
+
+    assignment_group = AssignmentGroup.objects.create(name="Mandatory")
+    assignment = Assignment.objects.create(name="First assignment", description="To be edited",course=machine_learning,deadline=date(2016, 2, 2),type="PD",group=assignment_group)
+    StudentAssignment.objects.create(user=student, assignment=assignment, grade=0)
 
 
 class Command(BaseCommand):

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block body %}
+    <form action="{% url 'give_assignment_to_groups' id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-default">Submit</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}x

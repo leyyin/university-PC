@@ -14,24 +14,22 @@ from elearning.utils import get_current_user
 def index(request):
     user = get_current_user(request)
 
-    if request.user.groups.filter(name='student').exists():
-        type = 'student'
-        enrollments = Enrollment.objects.filter(user=user).all()
-        courses = []
-        for e in enrollments:
-            courses.append((e.course, e.enroll_date))
-    elif request.user.groups.filter(name='teacher').exists():
-        type = 'teacher'
+    if user.is_student():
+        courses = Course.objects.filter(students__user=request.user).all()
+        # enrollments = Enrollment.objects.filter(user=user).all()
+        # courses = []
+        # for e in enrollments:
+        #     courses.append((e.course, e.enroll_date))
+    elif user.is_teacher():
         courses = Course.objects.filter(teacher=user).all()
-
+    elif user.is_assistant():
+        courses = Course.objects.filter(assistants__user=request.user).all()
     else:
-        rc = RequestContext(request, {'type': 'admin'})
-        return render(request, 'index.html', context_instance=rc)
+        courses = Course.objects.all()
 
     rc = RequestContext(request, {
-        "type": type,
+        "user_elearning": user,
         "courses": courses
     })
-
     return render(request, 'index.html', context_instance=rc)
 
