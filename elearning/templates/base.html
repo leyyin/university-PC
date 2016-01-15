@@ -14,7 +14,10 @@
     {% block head %}{% endblock %}
 </head>
 <body {% block body_attributes %}{% endblock %}>
-{% include 'partials/_header.html' %}
+
+{% if user.is_authenticated %}
+    {% include 'partials/_header.html' %}
+{% endif %}
 
 <div class="container">
     {# Display flash messages #}
