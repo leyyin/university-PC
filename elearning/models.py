@@ -53,7 +53,7 @@ class Course(models.Model):
     # TODO: write all the __str__ functions
 
     def __str__(self):
-        return '{1} {0}'.format(self.name, self.subject.name)
+        return '{0} {1}'.format(self.name, self.subject.name)
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
@@ -74,10 +74,16 @@ class Enrollment(models.Model):
     class Meta:
         unique_together = (('user', 'course'),)
 
+    def __str__(self):
+        return '{0} | {1}'.format(self.user.user.first_name, self.course.name)
+
 
 class Resource(models.Model):
     name = models.CharField(max_length=64)
     path = models.CharField(max_length=256)
+
+    def __str__(self):
+        return '{0} | {1}'.format(self.name, self.path)
 
 
 class Lecture(models.Model):
@@ -86,6 +92,9 @@ class Lecture(models.Model):
     lecture_index = models.PositiveSmallIntegerField()
     course = models.ForeignKey(Course)
     resource = models.ForeignKey(Resource)
+
+    def __str__(self):
+        return '{0} | {1} | {2}'.format(self.name, self.course.name, self.resource.name)
 
 
 # Model for grouping the assignments
@@ -122,6 +131,9 @@ class Assignment(models.Model):
     students = models.ManyToManyField(UserELearning, through="StudentAssignment")
     group = models.ForeignKey(AssignmentGroup)
 
+    def __str__(self):
+        return '{0} | {1} | {2} | {3}'.format(self.name, self.description, self.type, self.group)
+
 
 # Intermediary model that manage the many-to-many relationship between Assignment and StudentGroup
 class StudentGroupAssignment(models.Model):
@@ -131,6 +143,9 @@ class StudentGroupAssignment(models.Model):
 
     class Meta:
         unique_together = (('student_group', 'assignment'),)
+
+    def __str__(self):
+        return '{0}'.format(self.student_group)
 
 
 # Intermediary model that manage the many-to-many relationship between Assignment and Student
@@ -142,10 +157,16 @@ class StudentAssignment(models.Model):
     class Meta:
         unique_together = (('user', 'assignment'),)
 
+    def __str__(self):
+        return '{0} | {1}'.format(self.user.user.first_name, self.assignment.name)
+
 
 class Question(models.Model):
     question_index = models.PositiveSmallIntegerField()
     type = models.CharField(max_length=128)
+
+    def __str__(self):
+        return '{0}'.format(self.type)
 
 
 class Test(models.Model):
@@ -157,6 +178,9 @@ class Test(models.Model):
     students = models.ManyToManyField(UserELearning, through="StudentTest")
     assignment_group = models.ForeignKey(AssignmentGroup)
 
+    def __str__(self):
+        return '{0} | {1} | {2} | {3}'.format(self.name, self.description, self.question, self.assignment_group)
+
 
 # Intermediary model that manage the many-to-many relationship between Student and Test
 class StudentTest(models.Model):
@@ -167,6 +191,9 @@ class StudentTest(models.Model):
 
     class Meta:
         unique_together = (('user', 'test'),)
+
+    def __str__(self):
+        return '{0} | {1}'.format(self.user.user.first_name, self.test.name)
 
 
 class Priority(models.Model):
@@ -182,12 +209,18 @@ class Thread(models.Model):
     thread_date = models.DateField(auto_now=True)
     priority = models.ForeignKey(Priority)
 
+    def __str__(self):
+        return '{0} | {1}'.format(self.title, self.user.user.first_name)
+
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread)
     user = models.ForeignKey(UserELearning)
     post_date = models.DateField(auto_now=True)
     comment = models.CharField(max_length=1024)
+
+    def __str__(self):
+        return '{0} | {1} | {2}'.format(self.thread.title, self.user.user.first_name, self.comment)
 
 
 class Rating(models.Model):
@@ -197,3 +230,6 @@ class Rating(models.Model):
 
     class Meta:
         unique_together = (('user', 'post'),)
+
+    def __str__(self):
+        return '{0} | {1}'.format( self.user.user.first_name, self.post)
