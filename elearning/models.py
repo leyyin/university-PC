@@ -75,7 +75,7 @@ class Enrollment(models.Model):
         unique_together = (('user', 'course'),)
 
     def __str__(self):
-        return '{0} | {1}'.format(self.user.user.first_name, self.course.name)
+        return '{0} | {1}'.format(self.user.user.username, self.course.name)
 
 
 class Resource(models.Model):
@@ -158,7 +158,7 @@ class StudentAssignment(models.Model):
         unique_together = (('user', 'assignment'),)
 
     def __str__(self):
-        return '{0} | {1}'.format(self.user.user.first_name, self.assignment.name)
+        return '{0} | {1}'.format(self.user.user.username, self.assignment.name)
 
 
 class Question(models.Model):
@@ -193,7 +193,7 @@ class StudentTest(models.Model):
         unique_together = (('user', 'test'),)
 
     def __str__(self):
-        return '{0} | {1}'.format(self.user.user.first_name, self.test.name)
+        return '{0} | {1}'.format(self.user.user.username, self.test.name)
 
 
 class Priority(models.Model):
@@ -210,7 +210,7 @@ class Thread(models.Model):
     priority = models.ForeignKey(Priority)
 
     def __str__(self):
-        return '{0} | {1}'.format(self.title, self.user.user.first_name)
+        return '{0} | {1}'.format(self.title, self.user.user.username)
 
 
 class Post(models.Model):
@@ -220,7 +220,7 @@ class Post(models.Model):
     comment = models.CharField(max_length=1024)
 
     def __str__(self):
-        return '{0} | {1} | {2}'.format(self.thread.title, self.user.user.first_name, self.comment)
+        return '{0} | {1} | {2}'.format(self.thread.title, self.user.user.username, self.comment)
 
 
 class Rating(models.Model):
@@ -232,4 +232,4 @@ class Rating(models.Model):
         unique_together = (('user', 'post'),)
 
     def __str__(self):
-        return '{0} | {1}'.format( self.user.user.first_name, self.post)
+        return '{0} | {1}'.format( self.user.user.username, self.post)
