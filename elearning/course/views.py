@@ -2,14 +2,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Q
 from django.forms import modelformset_factory
 from django.shortcuts import render, redirect
-from django.db.models import Q
 
 from elearning.course.forms import SimpleCourseForm, AdminEditCourseForm, TeacherEditCourseForm, AssignmentForm, \
     ReadOnlyAssignmentForm, AssignStudentsForm
-from elearning.models import Enrollment, UserELearning, Course, AssistantCourse, Assignment, StudentAssignment
-from elearning.utils import get_current_user
+from elearning.models import Enrollment, Course, AssistantCourse, Assignment, StudentAssignment
+from elearning.utils import get_current_user, create_forums_course
 
 
 @login_required
@@ -18,8 +18,10 @@ def add_course(request):
         user = get_current_user(request)
         form = SimpleCourseForm(request.POST)
         if form.is_valid():
-            Course.objects.create(name=form.cleaned_data['name'], subject=form.cleaned_data['subject'],
-                                  teacher=user)
+            course = Course.objects.create(name=form.cleaned_data['name'], subject=form.cleaned_data['subject'],
+                                           teacher=user)
+            create_forums_course(course)
+
             messages.success(request, "Course created")
             return redirect('index')
     else:
@@ -48,7 +50,7 @@ def add_assignment(request, id):
             messages.error(request, "You are not allowed to add an assignment to this course.")
             return redirect('index')
         form = AssignmentForm()
-        return render(request, 'course/add_assignment.html', {'form': form,'course': course})
+        return render(request, 'course/add_assignment.html', {'form': form, 'course': course})
 
 
 @login_required
@@ -112,12 +114,14 @@ def see_assignments(request, id):
     user = get_current_user(request)
     course = Course.objects.get(id=id)
     can_delete = True if user == course.teacher or user in course.assistants.all() else False
-    AssignmentFormSet = modelformset_factory(Assignment, fields=('id', 'name', 'description', 'deadline', 'type', 'group'), can_delete=can_delete, form=AssignmentForm, max_num=0)
+    AssignmentFormSet = modelformset_factory(Assignment,
+                                             fields=('id', 'name', 'description', 'deadline', 'type', 'group'),
+                                             can_delete=can_delete, form=AssignmentForm, max_num=0)
     if request.method == 'POST':
         formset = AssignmentFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            messages.success(request,"Assignments successfully saved.")
+            messages.success(request, "Assignments successfully saved.")
         return redirect('index')
     else:
         if user.is_in_group("student"):
@@ -130,7 +134,8 @@ def see_assignments(request, id):
         messages.info(request, "There are no assignments for this course")
         return redirect('index')
     else:
-        return render(request, 'course/see_assignments.html', {'formset': formset, 'course': course, 'user_elearning': user})
+        return render(request, 'course/see_assignments.html',
+                      {'formset': formset, 'course': course, 'user_elearning': user})
 
 
 @login_required()
@@ -140,13 +145,13 @@ def give_assignment_to_students(request, assignment_id):
         form = AssignStudentsForm(assignment, request.POST, request.FILES)
         if form.is_valid():
             for student in form.clean_students():
-                StudentAssignment.objects.get_or_create(user=student, assignment= assignment, grade = 0)
+                StudentAssignment.objects.get_or_create(user=student, assignment=assignment, grade=0)
             messages.success(request, "Assignment successfully given.")
             return redirect('index')
     else:
         assignment = Assignment.objects.get(id=assignment_id)
         form = AssignStudentsForm(assignment)
-    return render(request, 'course/give_assignment_to_students.html', {'form': form,'id': assignment_id})
+    return render(request, 'course/give_assignment_to_students.html', {'form': form, 'id': assignment_id})
 
 
 # TODO

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from django.db import models
+from pybb.models import Forum
 
 
 class UserELearningManager(models.Manager):
@@ -65,7 +66,8 @@ class Course(models.Model):
     teacher = models.ForeignKey(UserELearning, related_name="teacher_course")
     assistants = models.ManyToManyField(UserELearning, related_name="assistant_course", through="AssistantCourse")
 
-    # TODO: write all the __str__ functions
+    def get_forum_id(self):
+        return Forum.objects.get(name=self.name).id
 
     def __str__(self):
         return '{0} | {1}'.format(self.name, self.subject.name)
