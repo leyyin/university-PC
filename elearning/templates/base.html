@@ -50,12 +50,29 @@
 
 </div>
 
-    <!-- Compiled and minified JavaScript -->
-    {% bootstrap_javascript %}
-    <script type="text/javascript" src="{% static 'pybb/js/pybbjs.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pybb/js/jquery.formset.min.js' %}"></script>
-    {% block extra_script %}{% endblock %}
-    <script src="{% static 'elearning/js/base.js' %}"></script>
-    <script src="{% static 'elearning/js/vendors/sb-admin-2.js' %}"></script>
+<!-- Compiled and minified JavaScript -->
+{% bootstrap_javascript %}
+<script type="text/javascript" src="{% static 'pybb/js/pybbjs.js' %}"></script>
+<script type="text/javascript" src="{% static 'pybb/js/jquery.formset.min.js' %}"></script>
+{% block extra_script %}{% endblock %}
+<script src="{% static 'elearning/js/base.js' %}"></script>
+<script src="{% static 'elearning/js/vendors/sb-admin-2.js' %}"></script>
+
+{#{% if  '/forums' in request.path %}#}
+{#    <script>#}
+{#        console.log("outside");#}
+{##}
+{#        $(document).ready(function () {#}
+{#            console.log("foreach");#}
+{#            $('img').each(function () {#}
+{#                var href = $(this).attr('src');#}
+{#                if (href.startsWith("pybb")) {#}
+{#                    $(this).attr('href', "http://127.0.0.1:8000/static" + href);#}
+{#                }#}
+{#            });#}
+{#        });#}
+{##}
+{#    </script>#}
+{#{% endif %}#}
 </body>
 </html>
