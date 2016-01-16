@@ -67,3 +67,4 @@ settings_local.py
 *.sqlite3
 .sass-cache
 static/
+pybb_upload/

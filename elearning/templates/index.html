@@ -3,18 +3,20 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-        <p>Hi {{ user.first_name }}({{ user.username }}), <a href="{% url 'logout' %}">logout</a></p>
+        <p>Hi {{ user.first_name }} ({{ user.username }})</p>
         {% if user_elearning.is_student %}
             <table class="table">
                 <tr>
                     <th>Course name</th>
                     <th>Teacher</th>
+                    <th>Links</th>
                 </tr>
                 {% for course in courses %}
                     <tr>
                         <td>{{ course.name }}</td>
                         <td>{{ course.teacher.user.first_name}} {{ course.teacher.user.last_name }}</td>
                         <td><a href="{% url 'see_assignments' course.id %}">Assignments</a></td>
+                        <td><a href="{% url 'pybb:forum' course.get_forum_id %}">Forum/Discussion</a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -23,6 +25,7 @@
                 <tr>
                     <th>Course name</th>
                     <th>Subject</th>
+                    <th>Links</th>
                 </tr>
                 {% for course in courses %}
                     <tr>
@@ -30,16 +33,19 @@
                         <td>{{ course.subject.name }}</td>
                         <td><a href="{% url 'see_assignments' course.id %}">Assignments</a></td>
                         <td><a href="{% url 'add_assignment' course.id %}">Add assignment</a></td>
+                        <td><a href="{% url 'pybb:forum' course.get_forum_id %}">Forum/Discussion</a></td>
                     </tr>
                 {% endfor %}
             </table>
         {% endif %}
         {% if user_elearning.is_teacher %}
-            <a href="{% url 'add_course' %}">Add course</a><br>
-            <a href="{% url 'see_courses' %}">Edit your courses</a>
+            <a href="{% url 'add_course' %}" class="btn btn-primary">Add course</a><hr>
+            <a href="{% url 'see_courses' %}" class="btn btn-primary">Edit your courses</a>
         {% endif %}
         {% if user_elearning.is_admin %}
-             <a href="{% url 'see_courses' %}">Edit courses</a>
+             <a href="{% url 'see_courses' %}" class="btn btn-primary">Edit courses</a><hr>
+             <a href="{% url 'admin:index' %}" class="btn btn-primary btn-lg btn-block" role="button">Go to Admin Area</a><hr>
+             <a href="{% url 'pybb:index' %}" class="btn btn-primary btn-lg btn-block" role="button">Forums</a>
         {% endif %}
     {% else %}
         <p>Please <a href="{% url 'login' %}">login</a> to see this page.</p>

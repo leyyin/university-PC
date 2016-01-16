@@ -48,4 +48,3 @@ urlpatterns = [
     url(r'^forums/', include('pybb.urls', namespace='pybb'))
 
 ] + staticfiles_urlpatterns()
-
