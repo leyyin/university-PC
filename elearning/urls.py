@@ -37,7 +37,11 @@ urlpatterns = [
     # /course
     url(r'^course/add-course/', course_views.add_course, name='add_course'),
     url(r'^course/see-courses/', course_views.see_courses, name='see_courses'),
-
+    url(r'^course/see-assignments/(?P<id>[-\w]+)/$', course_views.see_assignments, name='see_assignments'),
+    url(r'^course/add-assignment/(?P<id>[-\w]+)/$', course_views.add_assignment, name='add_assignment'),
+    url(r'^course/give_assignment_to_students/([-\w]+)/$', course_views.give_assignment_to_students, name="give_assignment_to_students"),
+    url(r'^course/give_assignment_to_groups/([-\w]+)/$', course_views.give_assignment_to_groups, name="give_assignment_to_groups"),
     # /schedule
     url(r'^schedule/', include('schedule.urls')),
 ] + staticfiles_urlpatterns()
+

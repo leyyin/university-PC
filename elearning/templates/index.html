@@ -4,20 +4,21 @@
 {% block body %}
     {% if user.is_authenticated %}
         <p>Hi {{ user.first_name }}({{ user.username }}), <a href="{% url 'logout' %}">logout</a></p>
-        {% if type == 'student' %}
+        {% if user_elearning.is_student %}
             <table class="table">
                 <tr>
                     <th>Course name</th>
-                    <th>Enroll date</th>
+                    <th>Teacher</th>
                 </tr>
-                {% for course, enroll_date in courses %}
+                {% for course in courses %}
                     <tr>
                         <td>{{ course.name }}</td>
-                        <td>{{ enroll_date }}</td>
+                        <td>{{ course.teacher.user.first_name}} {{ course.teacher.user.last_name }}</td>
+                        <td><a href="{% url 'see_assignments' course.id %}">Assignments</a></td>
                     </tr>
                 {% endfor %}
             </table>
-        {% elif type == 'teacher' %}
+        {% elif user_elearning.is_teacher or user_elearning.is_assistant %}
             <table class="table">
                 <tr>
                     <th>Course name</th>
@@ -27,12 +28,17 @@
                     <tr>
                         <td>{{ course.name }}</td>
                         <td>{{ course.subject.name }}</td>
+                        <td><a href="{% url 'see_assignments' course.id %}">Assignments</a></td>
+                        <td><a href="{% url 'add_assignment' course.id %}">Add assignment</a></td>
                     </tr>
                 {% endfor %}
             </table>
+        {% endif %}
+        {% if user_elearning.is_teacher %}
             <a href="{% url 'add_course' %}">Add course</a><br>
             <a href="{% url 'see_courses' %}">Edit your courses</a>
-        {% else %}
+        {% endif %}
+        {% if user_elearning.is_admin %}
              <a href="{% url 'see_courses' %}">Edit courses</a>
         {% endif %}
     {% else %}
