@@ -1,10 +1,9 @@
 #!/usr/bin/python
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.template.context import RequestContext
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
+from django.shortcuts import render, redirect
 from django.db.models import Q
 
 from elearning.course.forms import SimpleCourseForm, AdminEditCourseForm, TeacherEditCourseForm, AssignmentForm, \
@@ -60,16 +59,18 @@ def see_courses(request):
     can_delete = True if user_is_admin else False
     used_form = AdminEditCourseForm if user_is_admin else TeacherEditCourseForm
     if user_is_admin:
-        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject','teacher','assistants', 'students'), can_delete=can_delete, form=used_form, max_num=1)
+        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject', 'teacher', 'assistants', 'students'),
+                                             can_delete=can_delete, form=used_form, max_num=1)
     else:
-        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject','assistants','students'), can_delete=can_delete, form=used_form, max_num=1)
+        CourseFormSet = modelformset_factory(Course, fields=('name', 'subject', 'assistants', 'students'),
+                                             can_delete=can_delete, form=used_form, max_num=1)
     if request.method == 'POST':
         formset = CourseFormSet(request.POST, request.FILES)
         if user_is_admin:
             if formset.is_valid():
                 for form in formset:
                     course = form.save(commit=False)
-                    #TODO get rid of this UGLY WAY
+                    # TODO get rid of this UGLY WAY
                     Enrollment.objects.filter(course=course).delete()
                     for student in form.clean_students():
                         Enrollment.objects.create(user=student, course=course)
@@ -79,7 +80,7 @@ def see_courses(request):
                     course.save()
                 messages.success(request, "Courses successfully edited.")
             else:
-                messages.error(request, "ERROR" + formset.errors.__str__())
+                messages.error(request, str(formset.errors))
             return redirect('index')
         else:
             if formset.is_valid():
@@ -95,7 +96,7 @@ def see_courses(request):
                     course.save()
                 messages.success(request, "Courses successfully edited.")
             else:
-                messages.error(request, "ERROR" + formset.errors.__str__())
+                messages.error(request, str(formset.errors))
 
             return redirect('index')
     else:

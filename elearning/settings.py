@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -21,12 +23,27 @@ INSTALLED_APPS = (
     'bootstrap3',
     # See https://github.com/darklow/django-suit
     'suit',
+
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
+    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+
+    # See https://github.com/llazzaro/django-scheduler
+    'schedule',
+
+    # See https://github.com/django-ckeditor/django-ckeditor
+    'ckeditor',
+
+    # See https://github.com/pydanny/django-wysiwyg/
+    'django_wysiwyg',
+
     'django_extensions',
     'debug_toolbar',
     'elearning'
@@ -67,7 +84,9 @@ WSGI_APPLICATION = 'elearning.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+TIME_ZONE = 'Europe/Bucharest'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -75,6 +94,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR + "/static/"
+
 
 # Redirect to index after login
 LOGIN_REDIRECT_URL = 'index'
@@ -82,16 +103,17 @@ LOGIN_REDIRECT_URL = 'index'
 # Login url
 LOGIN_URL = 'login'
 
-# see http://django-suit.readthedocs.org/en/develop/configuration.html
+# See http://django-suit.readthedocs.org/en/develop/configuration.html
 SUIT_CONFIG = {
     'ADMIN_NAME': 'Admin Area'
 }
 
 
-# see http://django-bootstrap3.readthedocs.org/en/latest/settings.html
+# See http://django-bootstrap3.readthedocs.org/en/latest/settings.html
+JQUERY_URL = STATIC_URL + 'elearning/js/vendors/jquery.min.js'
 BOOTSTRAP3 = {
     # The URL to the jQuery JavaScript file
-    'jquery_url': STATIC_URL + 'elearning/js/vendors/jquery.min.js',
+    'jquery_url': JQUERY_URL,
 
     # The Bootstrap base URL
     'base_url': STATIC_URL + 'elearning/',
@@ -108,3 +130,10 @@ BOOTSTRAP3 = {
     # Include jQuery with Bootstrap JavaScript (affects django-bootstrap3 template tags)
     'include_jquery': True,
 }
+
+# See https://github.com/django-ckeditor/django-ckeditor#required
+CKEDITOR_JQUERY_URL = JQUERY_URL
+
+# See https://github.com/pydanny/django-wysiwyg/#using-the-ckeditor
+DJANGO_WYSIWYG_FLAVOR = "ckeditor"
+DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL

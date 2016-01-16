@@ -16,9 +16,12 @@ Including another URLconf
 import django.contrib.auth.views as auth_views
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from . import views
 from .course import views as course_views
+
+
 urlpatterns = [
     # /
     url(r'^$', views.index, name='index'),
@@ -30,11 +33,15 @@ urlpatterns = [
 
     # /admin
     url(r'^admin/', include(admin.site.urls)),
+
     # /course
     url(r'^course/add-course/', course_views.add_course, name='add_course'),
     url(r'^course/see-courses/', course_views.see_courses, name='see_courses'),
     url(r'^course/see-assignments/(?P<id>[-\w]+)/$', course_views.see_assignments, name='see_assignments'),
     url(r'^course/add-assignment/(?P<id>[-\w]+)/$', course_views.add_assignment, name='add_assignment'),
     url(r'^course/give_assignment_to_students/([-\w]+)/$', course_views.give_assignment_to_students, name="give_assignment_to_students"),
-    url(r'^course/give_assignment_to_groups/([-\w]+)/$', course_views.give_assignment_to_groups, name="give_assignment_to_groups")
-]
+    url(r'^course/give_assignment_to_groups/([-\w]+)/$', course_views.give_assignment_to_groups, name="give_assignment_to_groups"),
+    # /schedule
+    url(r'^schedule/', include('schedule.urls')),
+] + staticfiles_urlpatterns()
+
