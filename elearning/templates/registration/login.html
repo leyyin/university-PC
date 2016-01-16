@@ -5,25 +5,21 @@
 {% block body_attributes %}class="login"{% endblock %}
 
 {% block body %}
-    <style>
-        .input-group {
-            margin-bottom: 25px;
-        }
-    </style>
-    <div class="container">
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title"><a href="{% url 'index' %}">eLearning Login</a></div>
-                    <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot
-                        password?</a></div>
+<div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-5">
+        <div class="login-title">eLearning</div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title"><a href="{% url 'index' %}">eLearning Login</a></div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot
+                    password?</a></div>
                 </div>
 
                 <div style="padding-top:30px" class="panel-body">
                     {% if form.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            <p>Your username and password didn't match. Please try again.</p>
-                        </div>
+                    <div class="alert alert-danger" role="alert">
+                        <p>Your username and password didn't match. Please try again.</p>
+                    </div>
                     {% endif %}
                     <form action="{% url 'django.contrib.auth.views.login' %}" id="login-form" class="form-horizontal"
                           role="form" method="post">
@@ -33,33 +29,53 @@
                             <input id="login-username" type="text" class="form-control" name="username" value=""
                                    placeholder="username" required>
                         </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="login-password" type="password" class="form-control" name="password"
+                        placeholder="password" required>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </div>
 
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="login-password" type="password" class="form-control" name="password"
-                                   placeholder="password" required>
-                            <input type="hidden" name="next" value="{{ next }}"/>
+                    <div class="input-group">
+                        <div class="checkbox">
+                            <label>
+                                <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                            </label>
                         </div>
+                    </div>
 
-                        <div class="input-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
-                                </label>
-                            </div>
+                    <div style="margin-top:10px" class="form-group">
+                        <!-- Button -->
+                        <div class="col-sm-12 controls">
+                            <button class="btn btn-success btn-block" type="submit" name="action">
+                                Login
+                            </button>
                         </div>
-
-                        <div style="margin-top:10px" class="form-group">
-                            <!-- Button -->
-                            <div class="col-sm-12 controls">
-                                <button class="btn btn-success btn-block" type="submit" name="action">
-                                    Login
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    <div class="right-side col-md-offset-6">
+        <div class="welcome-message">
+            <h1>Welcome to eLearning!</h1>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+                <li>Aliquam tincidunt mauris eu risus.</li>
+                <li>Vestibulum auctor dapibus neque.</li>
+                <li>Nunc dignissim risus id metus.</li>
+                <li>Cras ornare tristique elit.</li>
+                <li>Vivamus vestibulum nulla nec ante.</li>
+                <li>Praesent placerat risus quis eros.</li>
+                <li>Fusce pellentesque suscipit nibh.</li>
+                <li>Donec quis dui at dolor tempor interdum.</li>
+                <li>Vivamus molestie gravida turpis.</li>
+                <li>Fusce lobortis lorem at ipsum semper sagittis.</li>
+                <li>Nam convallis pellentesque nisl.</li>
+                <li>Integer malesuada commodo nulla.</li>
+            </ul>
+        </div>
+        <div class="intro-img"><img src="/static/elearning/images/tzutzu.png"></div>
+    </div>
+</div>
 {% endblock %}
