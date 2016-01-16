@@ -130,7 +130,7 @@ def see_assignments(request, id):
         messages.info(request, "There are no assignments for this course")
         return redirect('index')
     else:
-        return render(request, 'course/see_assignments.html', {'formset': formset, 'course': course, 'user': user})
+        return render(request, 'course/see_assignments.html', {'formset': formset, 'course': course, 'user_elearning': user})
 
 
 @login_required()
