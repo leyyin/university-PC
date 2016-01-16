@@ -22,4 +22,5 @@ django-wysiwyg==0.7.1
 django-ckeditor==5.0.2
 pybbm==0.17.3
 markdown==2.6.5
-bbcode
+bbcode==1.0.21
+Pillow==3.1.0
