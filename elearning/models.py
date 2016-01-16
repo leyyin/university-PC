@@ -32,6 +32,21 @@ class UserELearning(models.Model):
         self.user.is_superuser = True
         self.user.save()
 
+    def is_admin(self):
+        return self.is_in_group("admin")
+
+    def is_teacher(self):
+        return self.is_in_group("teacher")
+
+    def is_assistant(self):
+        return self.is_in_group("assistant")
+
+    def is_student(self):
+        return self.is_in_group("student")
+
+    def is_in_group(self, group_name):
+        return self.user.groups.filter(name=group_name).exists()
+
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
 
@@ -53,7 +68,7 @@ class Course(models.Model):
     # TODO: write all the __str__ functions
 
     def __str__(self):
-        return '{0} {1}'.format(self.name, self.subject.name)
+        return '{0} | {1}'.format(self.name, self.subject.name)
 
 
 # Intermediary model that manage the many-to-many relationship between Assistant and Course
@@ -126,10 +141,11 @@ class Assignment(models.Model):
     )
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=1024)
+    course = models.ForeignKey(Course)
     deadline = models.DateField()
     type = models.CharField(max_length=2, choices=ASSIGNMENT_TYPES)
     students = models.ManyToManyField(UserELearning, through="StudentAssignment")
-    group = models.ForeignKey(AssignmentGroup)
+    group = models.ForeignKey(AssignmentGroup, blank=True)
 
     def __str__(self):
         return '{0} | {1} | {2} | {3}'.format(self.name, self.description, self.type, self.group)
