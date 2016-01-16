@@ -146,7 +146,7 @@ def give_assignment_to_students(request, assignment_id):
     else:
         assignment = Assignment.objects.get(id=assignment_id)
         form = AssignStudentsForm(assignment)
-    return render(request, 'course/give_assignment_to_students.html', {'form': form,'id':assignment_id})
+    return render(request, 'course/give_assignment_to_students.html', {'form': form,'id': assignment_id})
 
 
 # TODO

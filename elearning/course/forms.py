@@ -60,7 +60,7 @@ class ReadOnlyAssignmentForm(AssignmentForm):
         super(AssignmentForm, self).__init__(*args, **kwargs)
         for key in self.fields.keys():
             self.fields[key].widget.attrs['readonly'] = True
-            self.fields[key].widget.attrs['disabled']= 'disabled'
+            self.fields[key].widget.attrs['disabled'] = 'disabled'
         widgets = {
             'deadline': forms.CharField(),
         }

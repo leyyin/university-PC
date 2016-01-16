@@ -1,14 +1,45 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
+{% load wysiwyg %}
 {% block body %}
     <form action="{% url 'see_assignments' course.id%}" method="post">
         {% csrf_token %}
         {{ formset.management_form }}
+        {% wysiwyg_setup %}
         {% for form in formset %}
-            {% for field in form %}
-                {% bootstrap_field field layout="horizontal" %}
-            {% endfor %}
+            {% if user_elearning.is_student %}
+
+                <table class="table">
+                    <tr>
+                        <td>Name</td>
+                        <td>{{  form.name.value }}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>{{ form.description.value|safe }}</td>
+                    </tr>
+                    <tr>
+                        <td>Deadline</td>
+                        <td>{{form.deadline.value}}</td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>{% bootstrap_field form.type show_label=False %}</td>
+                    </tr>
+                    <tr>
+                        <td>Group</td>
+                        <td>{% bootstrap_field form.group show_label=False %}</td>
+                    </tr>
+                </table>
+            {% else %}
+
+                {% for field in form %}
+                    {% bootstrap_field field layout="horizontal" %}
+                {% endfor %}
+
+            {% endif %}
             {% if user_elearning.is_teacher or user_elearning.is_assistant %}
+                {% wysiwyg_editor form.description.id_for_label %}
                 Give assignment to: <a  href="{% url 'give_assignment_to_students' form.id.value%}" class="btn btn-default" >Students</a> <a  href="{% url 'give_assignment_to_groups' form.id.value  %}" class="btn btn-default" >Groups</a><br>
             {% endif %}
         {% endfor %}
