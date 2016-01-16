@@ -1,7 +1,26 @@
 .login-title {
-    margin-top: 2em;
+	font-family: 'Pacifico', cursive;
+	font-size: 48px;
+	color: white;
 	text-align: center;
-	a {
-		color: #ee6e73;
-	}
+	position: relative;
+	top: 14px;
+	z-index: -1;
+}
+
+.login .panel-heading {
+	border-top: 6px solid white;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.welcome-message {
+	color: white;
+	margin-bottom: 60px;
+}
+
+.intro-img {
+	text-align: center;
 }
